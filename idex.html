@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Queen - HOME</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Minecraft', 'Press Start 2P', monospace;
+      background-color: #9932cc;
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 255, 0, 0.8), 0 0 30px rgba(255, 255, 0, 0.6);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+      20%, 40%, 60%, 80% { transform: translateX(2px); }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #6a0dad;
+      padding: 14px 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 47.5px;
+      padding-left: 40px;
+      font-size: 19px;
+      font-weight: 100;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 11.4px 22.8px;
+      border-radius: 12px;
+      text-shadow: #4b0082 2px 2px 0px;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+      animation: bounce 0.6s ease;
+    }
+
+    .rank-link {
+      background-color: #ffff00 !important;
+      color: #6a0dad !important;
+      font-size: 23px !important;
+      border-radius: 50px !important;
+      padding: 13.8px 27.6px !important;
+      transform: scale(1.1);
+      animation: glow 2s infinite;
+    }
+
+    .rank-link:hover {
+      animation: pulse 0.3s ease, glow 2s infinite;
+    }
+
+    /* Header spacer */
+    .header-spacer {
+      height: 89px;
+      background-color: #6a0dad;
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(#6a0dad, #9370db);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="10" height="10" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 20px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .server-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: white;
+      animation: slideInLeft 1s ease-out 0.3s both;
+    }
+
+    .server-icon {
+           width: 80px;
+      height: 80px;
+      background: rgba(96, 33, 156, 0.438);
+      border: 2px solid #6c39a0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 10px 15px -3px rgba(107, 33, 168, 0.3), 0 4px 6px -4px rgba(107, 33, 168, 0.2);
+      animation: bounce 2s infinite;
+    }
+
+    .server-details h2 {
+      font-family: 'Minecraft', 'Press Start 2P', cursive;
+      font-size: 25px;
+      font-weight: 100;
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      white-space: nowrap;
+    }
+
+    .player-count {
+      background-color: #ffe400;
+      color: #6a0dad;
+      font-size: 18.75px;
+      padding: 4.6875px 11.25px;
+      border-radius: 6px;
+      letter-spacing: 1px;
+      animation: pulse 2s infinite;
+    }
+
+    .server-ip {
+      font-size: 15.84px;
+      margin-top: 4px;
+    }
+
+    .logo-container {
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .logo {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+    }
+
+    /* Promotional banner */
+    .promo-banner {
+      background-color: #e6e6fa;
+      border-radius: 20px;
+      box-shadow: #d8bfd8 0px 8px 0px 0px;
+      padding: 32px 48px;
+      margin: 50px auto;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: slideInRight 1s ease-out;
+    }
+
+    .promo-content {
+      flex-grow: 1;
+    }
+
+    .promo-title {
+      font-size: 40px;
+      font-weight: 100;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .promo-code {
+      color: #6a0dad;
+      margin-left: 10px;
+      animation: shake 0.5s ease-in-out infinite;
+    }
+
+    .promo-subtitle {
+      color: #4b0082;
+      font-size: 12px;
+      margin-top: 5px;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .promo-image {
+      width: 120px;
+      height: 120px;
+      padding: 16px;
+      border-radius: 16px;
+      margin-right: 16px;
+      animation: bounce 2s infinite;
+    }
+
+    .countdown {
+      font-family: 'Press Start 2P', cursive;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+      animation: slideInRight 1s ease-out 0.9s both;
+    }
+
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .countdown-number {
+      font-size: 30px;
+      font-weight: 700;
+      color: black;
+      text-shadow: black 1px 1px 0px;
+      border-radius: 3px;
+      animation: pulse 1s infinite;
+    }
+
+    .countdown-label {
+      font-family: 'Minecraft', sans-serif;
+      font-size: 12px;
+      color: #4b0082;
+      margin-top: 3.6px;
+    }
+
+    .countdown-separator {
+      font-size: 16px;
+      animation: pulse 1s infinite;
+    }
+
+    /* Game sections */
+    .game-sections {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28.8px;
+      margin: 20px 0 50px;
+    }
+
+    .game-grid {
+      display: flex;
+      gap: 28.8px;
+      max-width: 1200px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .game-card {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .game-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .ranks-card {
+      background-color: #8a2be2;
+      box-shadow: #663399 0px 8px 0px 0px;
+      width: 585px;
+      height: 428.797px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation-delay: 0.2s;
+    }
+
+    .ranks-card img {
+      width: 100%;
+      height: 390px;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .side-cards {
+      display: none;
+    }
+
+    .crates-card, .gems-card {
+      height: 200px;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crates-card {
+      background-color: #ff8604;
+      box-shadow: #a35604 0px 8px 0px 0px;
+      animation-delay: 0.4s;
+    }
+
+    .gems-card {
+      background-color: #90c43d;
+      box-shadow: #496620 0px 8px 0px 0px;
+      animation-delay: 0.6s;
+    }
+
+    .crates-card img, .gems-card img {
+      width: 100%;
+      height: 168px;
+      object-fit: contain;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .crates-card:hover img, .gems-card:hover img {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .view-ranks {
+      background-color: #6a0dad;
+      box-shadow: #4b0082 0px 8px 0px 0px;
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      height: auto;
+      animation: fadeInUp 1s ease-out 0.8s both;
+    }
+
+    .view-ranks img {
+      width: 55%;
+      height: auto;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .view-ranks:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #2e0854;
+      color: white;
+      padding: 60px 0;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-info {
+      font-family: system-ui;
+    }
+
+    .footer-info p {
+      font-size: 15px;
+      margin: 4px 0;
+      line-height: 1.4;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .social-link {
+      width: 50px;
+      height: 50px;
+      background-color: #4b0082;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #dda0dd;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .social-link:hover {
+      background-color: #6a0dad;
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-link i {
+      font-size: 16px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 24px;
+      }
+
+      .promo-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .game-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .ranks-card, .side-cards {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 20px;
+        justify-content: center;
+      }
+
+      .countdown {
+        justify-content: center;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    /* Stagger animations */
+    .game-card:nth-child(1) { animation-delay: 0.1s; }
+    .game-card:nth-child(2) { animation-delay: 0.3s; }
+    .game-card:nth-child(3) { animation-delay: 0.5s; }
+
+    .social-link:nth-child(1) { animation-delay: 0.1s; }
+    .social-link:nth-child(2) { animation-delay: 0.2s; }
+    .social-link:nth-child(3) { animation-delay: 0.3s; }
+    .social-link:nth-child(4) { animation-delay: 0.4s; }
+    .social-link:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Hover effects for links */
+    a {
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Particle effect */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: particle-float 6s infinite linear;
+    }
+
+    @keyframes particle-float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="loading">
+    <ul>
+      <li><a href="/html/Queenmc.html">home</a></li>
+      <li><a href="/html/vote.html">vote</a></li>
+      <li><a href="https://t">help</a></li>
+      <li><a href="/html/rank.html" class="rank-link">rank</a></li>
+      <li><a href="/html/staff.html">staff</a></li>
+      <li><a href="/download">download</a></li>
+      <li><a href="/">soon</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-spacer"></div>
+
+  <section class="hero">
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+      <div class="server-info loading">
+        <div class="server-icon">
+          <i class="fas fa-gamepad"></i>
+        </div>
+        <div class="server-details">
+            <h2>play online <span class="player-count">No Show</span></h2>
+          <div class="server-ip">QUEEN.VIP</div>
+        </div>
+      </div>
+
+      <div class="logo-container loading">
+        <img src="/image/unnamed__5_-removebg-preview.png" alt="My Queen Logo" class="logo">
+      </div>
+      <div class="server-info loading">
+        <div class="server-details">
+          <h2 style="flex-direction: row-reverse;"><span class="player-count">Nozzzzzz</span> users online</h2>
+         <div class="server-address">QueenMc/DC</div>
+        </div>
+        <div class="server-icon">
+          <i class="fab fa-discord"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <main>
+
+    <div class="game-sections">
+      <div class="game-grid">
+        <div class="game-card ranks-card loading">
+          <a href="/html/rank.html">
+            <img src="/image/de5dcfa4a3677ed54e768917d06bc3ecac4cb4d9.png" alt="Ranks Box">
+          </a>
+        </div>
+
+        <div class="side-cards">
+          <!-- Crates and Gems sections removed -->
+        </div>
+      </div>
+
+      <a href="/viewrank" class="view-ranks loading">
+        <div>
+          <img src="https://c.animaapp.com/mfvefv36o5kDo3/assets/viewrank-BQB2xta5.png" alt="View Ranks">
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="loading">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p>© 2025 <strong>QUEEN MC</strong> All Rights Reserved.</p>
+        <p><strong>Support Email:</strong> meyrtn1@gmail.com</p>
+        <p>Theme created by: <strong><a href="/"></a> & <a href="https://web.facebook.com/y.not.hong.204914">YUN-HONG</a></strong></p>
+        <p><strong>Version:</strong> 1.0.0</p>
+      </div>
+
+      <div class="social-links">
+        <a href="https://discord.gg/pKr5BFvp" class="social-link">
+          <i class="fab fa-discord"></i>
+        </a>
+        <a href="https://discord.gg/pKr5BFvp" class="social-link">
+          <i class="fab fa-telegram"></i>
+        </a>
+        <a href="https://discord.gg/pKr5BFvp" class="social-link">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://discord.gg/pKr5BFvp" class="social-link">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://discord.gg/pKr5BFvp" class="social-link">
+          <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Animate elements on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all loading elements
+    document.querySelectorAll('.loading').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Countdown timer
+    function updateCountdown() {
+      const countdownElements = document.querySelectorAll('.countdown-number');
+      const now = new Date().getTime();
+      const targetTime = now + (3 * 24 * 60 * 60 * 1000); // 3 days from now
+      
+      setInterval(() => {
+        const currentTime = new Date().getTime();
+        const timeLeft = targetTime - currentTime;
+        
+        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        if (countdownElements[0]) countdownElements[0].textContent = hours;
+        if (countdownElements[1]) countdownElements[1].textContent = minutes;
+        if (countdownElements[2]) countdownElements[2].textContent = seconds;
+      }, 1000);
+    }
+
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Initialize animations and effects
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCountdown();
+      createParticles();
+      
+      // Add hover effects to game cards
+      document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+
+    // Add parallax effect to hero section
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      const logo = document.querySelector('.logo');
+      
+      if (hero && logo) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        logo.style.transform = `translateY(${scrolled * 0.3}px)`;
+      }
+    });
+  </script>
+</body>
+</html>
